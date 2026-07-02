@@ -6,6 +6,15 @@ const prettierConfig = require("eslint-config-prettier");
 const prettierPluginRecommended = require("eslint-plugin-prettier/recommended");
 
 module.exports = [
+  {
+    ignores: [
+      "node_modules/**",
+      "dist/**",
+      ".github/**",
+      ".DS_Store",
+      "package-lock.json",
+    ],
+  },
   js.configs.recommended,
   {
     files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
