@@ -26,12 +26,25 @@ const Form = ({ onSubmit }) => {
         onChange={(event) => setTaskName(event.target.value)}
         placeholder="Enter task name"
       />
-      <input
-        type="text"
+      <br></br>
+      <textarea
+        style={{
+          marginTop: "8px",
+          minWidth: "200px",
+          maxWidth: "200px",
+          minHeight: "80px",
+          maxHeight: "80px",
+          borderRadius: "8px",
+          border: "2px solid #ccc",
+          padding: "4px",
+          resize: "vertical",
+        }}
         value={taskDescription}
         onChange={(event) => setTaskDescription(event.target.value)}
         placeholder="Enter task description"
+        rows={4}
       />
+      <br></br>
       <button type="submit">Add new task</button>
     </form>
   );
