@@ -8,8 +8,16 @@ const Counter = () => {
   return (
     <>
       <p id="count-display">{`Count: ${count}`}</p>
-      <button id="increment-button" onClick={onClickIncrement}>
-        Increment
+      <button
+        id="increment-button"
+        style={{ border: "none", background: "none" }}
+        onClick={onClickIncrement}
+      >
+        <img
+          src="https://clipart-library.com/2023/cookie-png-transparent-images-background-23.png"
+          alt="Increment"
+          style={{ width: "20px", height: "20px" }}
+        />
       </button>
     </>
   );
