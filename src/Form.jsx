@@ -1,8 +1,9 @@
 import React from "react";
 
-const Form = ({ onSubmit, disabled = false }) => {
+const Form = ({ onSubmit, teams = [], disabled = false }) => {
   const [taskName, setTaskName] = React.useState("");
   const [taskDescription, setTaskDescription] = React.useState("");
+  const [scope, setScope] = React.useState("personal");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,13 +14,33 @@ const Form = ({ onSubmit, disabled = false }) => {
       return;
     }
 
-    onSubmit({ name: trimmedTask, description: trimmedDescription });
+    onSubmit({
+      name: trimmedTask,
+      description: trimmedDescription,
+      teamId: scope === "personal" ? null : scope,
+    });
     setTaskName("");
     setTaskDescription("");
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <label className="field-label" htmlFor="task-scope-select">
+        Task for
+      </label>
+      <select
+        id="task-scope-select"
+        value={scope}
+        onChange={(event) => setScope(event.target.value)}
+        disabled={disabled}
+      >
+        <option value="personal">Personal</option>
+        {teams.map((team) => (
+          <option key={team.id} value={team.id}>
+            Team: {team.name}
+          </option>
+        ))}
+      </select>
       <input
         type="text"
         id="task-name-input"

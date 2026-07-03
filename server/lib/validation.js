@@ -16,7 +16,16 @@ function validatePassword(password) {
   return null;
 }
 
+function validateTeamName(name) {
+  if (typeof name !== "string" || !USERNAME_PATTERN.test(name)) {
+    return "Team name must be 3-32 characters and contain only letters, digits, or underscores.";
+  }
+
+  return null;
+}
+
 module.exports = {
   validateUsername,
   validatePassword,
+  validateTeamName,
 };

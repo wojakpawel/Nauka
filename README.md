@@ -1,14 +1,16 @@
 # Learning
 
-A small Vite + React learning project with a todo app backed by user accounts and a PostgreSQL database.
+A small Vite + React learning project with a todo app backed by user accounts, teams, and a PostgreSQL database.
 
 ## Features
 
 - Register and log in with username and password
 - Passwords stored as bcrypt hashes (never plain text)
-- JWT authentication with per-user task isolation
-- Add a task with a name and description
-- Remove completed tasks from the list
+- JWT authentication with per-user and per-team task access
+- Create teams and invite other users by username
+- Accept or reject team invitations after logging in
+- Add personal tasks or tasks scoped to a team
+- Team tasks visible to all members; only the creator or team owner can mark them complete
 - Tasks persist in PostgreSQL and reload after login or page refresh
 
 ## Installation
@@ -81,14 +83,21 @@ This is a learning project, not production-hardened infrastructure. The codebase
 
 - **Password hashing:** bcrypt (cost factor 10); only `password_hash` is stored in the database
 - **SQL injection:** all queries use parameterized placeholders (`$1`, `$2`, …)
-- **Authorization:** task routes require a valid JWT; queries are scoped to the authenticated `user_id`
+- **Authentication:** JWT required on protected routes; invalid tokens return `401`
+- **Authorization:**
+  - Personal tasks visible only to the owner
+  - Team tasks visible only to team members
+  - Task completion enforced server-side (`403` if not creator or team owner)
+  - Team invitations: only the team owner can invite; only the invitee can accept/reject
+  - Team task creation requires membership (server verifies `teamId`)
+- **Request size:** JSON bodies limited to 16 KB
 - **Secrets:** `JWT_SECRET` and database credentials live in `.env` (gitignored); never commit `.env`
-- **Dependencies:** `npm audit` reports no known vulnerabilities in current lockfile
+- **Dependencies:** `npm audit` reports no known vulnerabilities in the current lockfile
 
 Known limitations appropriate for local development:
 
 - JWT is stored in `localStorage` (vulnerable to XSS if script injection ever occurs)
-- No rate limiting on login or register
+- No rate limiting on login, register, or invitations
 - API listens on `127.0.0.1` only — suitable for local dev, not public deployment as-is
 
 Use a strong `JWT_SECRET` and treat `.env.example` values as dev-only defaults.
@@ -113,8 +122,10 @@ npm run lint
 
 | Path | Purpose |
 |------|---------|
-| `src/App.jsx` | App shell and auth gate |
+| `src/App.jsx` | App shell, invitations, teams, and todo UI |
 | `src/Auth.jsx` | Login and register forms |
+| `src/Teams.jsx` | Create teams and send invitations |
+| `src/Invitations.jsx` | Accept or reject pending invitations |
 | `src/ToDo.jsx` | Task list backed by the API |
 | `src/api/` | Frontend API client and JWT storage |
 | `server/` | Express API, JWT auth, PostgreSQL access |
