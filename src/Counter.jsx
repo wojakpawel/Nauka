@@ -8,6 +8,7 @@ const Counter = () => {
   return (
     <>
       <p id="count-display">{`Count: ${count}`}</p>
+      {count >= 20 && <p id="count-high">Stop clicking already!</p>}
       <button
         id="increment-button"
         style={{ border: "none", background: "none" }}

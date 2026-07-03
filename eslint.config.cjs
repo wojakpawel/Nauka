@@ -9,6 +9,26 @@ module.exports = [
     ],
   },
   {
+    files: ["server/**/*.{js,cjs}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "commonjs",
+      globals: {
+        console: "readonly",
+        process: "readonly",
+        module: "readonly",
+        require: "readonly",
+        __dirname: "readonly",
+      },
+    },
+    plugins: {
+      prettier: require("eslint-plugin-prettier"),
+    },
+    rules: {
+      "prettier/prettier": "error",
+    },
+  },
+  {
     files: ["**/*.{js,mjs,cjs,jsx,ts,tsx}"],
     languageOptions: {
       ecmaVersion: "latest",
@@ -17,6 +37,8 @@ module.exports = [
         window: "readonly",
         document: "readonly",
         console: "readonly",
+        localStorage: "readonly",
+        fetch: "readonly",
       },
       parserOptions: {
         ecmaFeatures: {

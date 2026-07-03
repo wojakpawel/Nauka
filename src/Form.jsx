@@ -1,6 +1,6 @@
 import React from "react";
 
-const Form = ({ onSubmit }) => {
+const Form = ({ onSubmit, disabled = false }) => {
   const [taskName, setTaskName] = React.useState("");
   const [taskDescription, setTaskDescription] = React.useState("");
 
@@ -26,6 +26,7 @@ const Form = ({ onSubmit }) => {
         value={taskName}
         onChange={(event) => setTaskName(event.target.value)}
         placeholder="Enter task name"
+        disabled={disabled}
       />
       <textarea
         id="task-description-input"
@@ -33,8 +34,11 @@ const Form = ({ onSubmit }) => {
         onChange={(event) => setTaskDescription(event.target.value)}
         placeholder="Enter task description"
         rows={4}
+        disabled={disabled}
       />
-      <button type="submit">Add new task</button>
+      <button type="submit" disabled={disabled}>
+        Add new task
+      </button>
     </form>
   );
 };

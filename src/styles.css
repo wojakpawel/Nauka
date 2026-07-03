@@ -167,6 +167,54 @@ button {
   transform: translateY(-1px);
 }
 
+.todo-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.user-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #526a85;
+}
+
+.logout-button,
+.link-button {
+  border: none;
+  border-radius: 999px;
+  background: #eef4ff;
+  color: #1f5bb5;
+  padding: 10px 16px;
+  font-weight: 600;
+}
+
+.link-button {
+  display: inline;
+  padding: 0;
+  background: none;
+  text-decoration: underline;
+}
+
+.auth-toggle {
+  margin: 0;
+  color: #627d98;
+}
+
+.form-error {
+  margin: 0;
+  color: #b42318;
+}
+
+.loading-message {
+  margin: 0;
+  color: #627d98;
+  text-align: center;
+}
+
 .no-tasks {
   margin: 0;
   color: #627d98;

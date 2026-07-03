@@ -8,6 +8,27 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: learning
+          POSTGRES_PASSWORD: learning
+          POSTGRES_DB: learning
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U learning -d learning"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://learning:learning@localhost:5432/learning
+      JWT_SECRET: ci-test-secret
+      PORT: 3001
+
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node.js
@@ -16,6 +37,22 @@ jobs:
           node-version: "20"
       - name: Install dependencies
         run: npm ci
+      - name: Run database migrations
+        run: npm run db:migrate
+      - name: Start API server
+        run: npm run dev:server &
+      - name: Wait for API health check
+        run: |
+          for attempt in $(seq 1 20); do
+            if curl -fsS http://localhost:3001/api/health; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "API server did not become healthy in time"
+          exit 1
+      - name: Lint
+        run: npm run lint
       - name: Build
         run: npm run build
       - name: Upload build artifacts
