@@ -3,7 +3,7 @@ import Form from "./Form.jsx";
 import List from "./List.jsx";
 import { createTask, deleteTask, listTasks } from "./api/tasks.js";
 
-const ToDo = ({ user, onLogout }) => {
+const ToDo = ({ user, teams, onLogout, refreshKey }) => {
   const [tasks, setTasks] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState("");
@@ -23,8 +23,9 @@ const ToDo = ({ user, onLogout }) => {
   }, []);
 
   React.useEffect(() => {
+    setLoading(true);
     loadTasks();
-  }, [loadTasks]);
+  }, [loadTasks, refreshKey]);
 
   const handleAddTask = async (task) => {
     setMutating(true);
@@ -67,7 +68,11 @@ const ToDo = ({ user, onLogout }) => {
           </button>
         </div>
       </div>
-      <Form onSubmit={handleAddTask} disabled={loading || mutating} />
+      <Form
+        onSubmit={handleAddTask}
+        teams={teams}
+        disabled={loading || mutating}
+      />
       {error ? <p className="form-error">{error}</p> : null}
       {loading ? (
         <p className="loading-message">Loading tasks...</p>
@@ -77,15 +82,29 @@ const ToDo = ({ user, onLogout }) => {
         <ul className="task-list">
           {tasks.map((task) => (
             <li key={task.id} className="task-item">
-              <List name={task.name} description={task.description} />
-              <button
-                type="button"
-                onClick={() => handleRemoveTask(task.id)}
-                className="task-remove"
-                disabled={mutating}
-              >
-                Done!
-              </button>
+              <div className="task-card">
+                {task.scope === "team" ? (
+                  <span className="team-badge">Team: {task.teamName}</span>
+                ) : null}
+                <List name={task.name} description={task.description} />
+              </div>
+              {task.canComplete ? (
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTask(task.id)}
+                  className="task-remove"
+                  disabled={mutating}
+                >
+                  Done!
+                </button>
+              ) : (
+                <span
+                  className="task-locked"
+                  title="Only the creator or team owner can complete this task"
+                >
+                  Locked
+                </span>
+              )}
             </li>
           ))}
         </ul>

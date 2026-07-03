@@ -71,7 +71,8 @@ button {
 }
 
 .app-shell input,
-.app-shell textarea {
+.app-shell textarea,
+.app-shell select {
   width: 100%;
   border-radius: 18px;
   border: 1px solid #d8e2ec;
@@ -84,7 +85,8 @@ button {
 }
 
 .app-shell input:focus,
-.app-shell textarea:focus {
+.app-shell textarea:focus,
+.app-shell select:focus {
   outline: none;
   border-color: #5d8af4;
   box-shadow: 0 0 0 5px rgba(93, 138, 244, 0.14);
@@ -223,4 +225,69 @@ button {
   background: #f5f9ff;
   border-radius: 20px;
   border: 1px solid #dce7f3;
+}
+
+.field-label {
+  margin: 0;
+  color: #526a85;
+  font-weight: 600;
+}
+
+.team-badge {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eef4ff;
+  color: #1f5bb5;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.team-list,
+.invitation-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: grid;
+  gap: 12px;
+}
+
+.team-item,
+.invitation-item {
+  display: grid;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: #f7fbff;
+  border: 1px solid rgba(20, 40, 81, 0.08);
+}
+
+.invitation-item {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.invitation-item p {
+  margin: 4px 0 0;
+  color: #627d98;
+}
+
+.invitation-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.invite-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.task-locked {
+  color: #627d98;
+  font-size: 0.9rem;
+  padding: 12px 18px;
 }
