@@ -4,11 +4,11 @@ This document describes the Learning todo app: a React frontend, Express API, an
 
 ## Overview
 
-    Browser (React, :5173)
+    Browser (React, Vite dev server — localhost + LAN when host: true)
         |
         |  fetch /api/...  +  Authorization: Bearer <JWT>
         v
-    Vite dev proxy
+    Vite dev proxy (/api → 127.0.0.1:3001)
         |
         v
     Express API (:3001, 127.0.0.1)
@@ -17,6 +17,8 @@ This document describes the Learning todo app: a React frontend, Express API, an
     PostgreSQL
 
 Production CI builds the static frontend (`dist/`). Full-stack production deployment is not configured yet.
+
+**Local phone testing:** `vite.config.js` sets `server.host: true` so Vite prints a Network URL on the LAN. The Express API still listens on `127.0.0.1` only; phones reach it through the Vite proxy. Suitable for trusted home Wi‑Fi during development, not for public exposure.
 
 ## Frontend (`src/`)
 

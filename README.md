@@ -44,6 +44,18 @@ npm run dev:all
 
 Open the app at the URL Vite prints (usually `http://localhost:5173`).
 
+### View on your phone (same Wi‑Fi)
+
+Vite is configured with `host: true`, so after `npm run dev:all` the terminal also prints a **Network** URL, for example:
+
+```text
+➜  Network: http://10.1.123.59:5173/
+```
+
+On your phone (same Wi‑Fi as this machine), open that Network URL in the browser. API calls go through the Vite dev proxy to `127.0.0.1:3001` on your computer — the API is not exposed directly to the network.
+
+**Local dev only:** anyone on the same Wi‑Fi who knows the URL can use the app. Do not use this on public Wi‑Fi for long periods, and do not port-forward the dev server to the internet.
+
 `dev:all` will:
 
 1. Start PostgreSQL (embedded, if nothing is already on port 5432)
@@ -106,6 +118,7 @@ This is a learning project, not production-hardened infrastructure. The codebase
 Known limitations appropriate for local development:
 
 - JWT is stored in `localStorage` (vulnerable to XSS if script injection ever occurs)
+- Vite `host: true` exposes the dev UI on your LAN for phone testing; the API stays on `127.0.0.1` and is reached via the Vite proxy
 - No rate limiting on login, register, or invitations
 - API listens on `127.0.0.1` only — suitable for local dev, not public deployment as-is
 

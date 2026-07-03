@@ -36,6 +36,8 @@ Vite + React learning project with a full-stack todo app: Express API, PostgreSQ
 
 `npm run test` requires PostgreSQL on port 5432 (same as `dev:all`). It runs migrations then the API smoke test in `server/smoke.test.js`.
 
+For phone testing on the same Wi‑Fi, use the **Network** URL Vite prints after `dev:all` (see `README.md`).
+
 If native install scripts are blocked on first run:
 
     npm approve-scripts --allow-scripts-pending
